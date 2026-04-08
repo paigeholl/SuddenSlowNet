@@ -37,8 +37,8 @@ DeviceNetworkEvents
 | where ActionType == "ConnectionFailed"
 | summarize FailedConnectionsAttempts = count() by DeviceName, ActionType, LocalIP
 | order by FailedConnectionsAttempts
-
 ```
+<img width="857" height="193" alt="image" src="https://github.com/user-attachments/assets/5132e166-5606-4a61-8f66-5b240725bd0b" />
 
 **Finding:** The device was failing a large number of connection attempts to multiple internal hosts.
 
@@ -58,8 +58,8 @@ DeviceNetworkEvents
 | where LocalIP == IPInQuestion
 | order by Timestamp desc
 | project Timestamp, DeviceName, ActionType, RemoteIP, RemotePort
-
 ```
+<img width="859" height="465" alt="image" src="https://github.com/user-attachments/assets/7ffca945-b397-441e-bb1f-1899d269fe52" />
 
 **Finding:** The failed connections showed a clear sequential pattern across common ports --- a strong indicator of a port scan. Multiple port scans appeared to be taking place.
 
@@ -80,8 +80,8 @@ DeviceProcessEvents
 | where DeviceName == VMName
 | order by Timestamp desc
 | project Timestamp, FileName, InitiatingProcessCommandLine
-
 ```
+<img width="914" height="365" alt="image" src="https://github.com/user-attachments/assets/b13365ea-e194-43ec-8e88-10bf6c1bbfef" />
 
 **Finding:** A PowerShell script named **portscan.ps1** was executed on the device at `2026-04-08T19:53:44Z`.
 
@@ -96,8 +96,8 @@ DeviceProcessEvents
 | where InitiatingProcessCommandLine contains "portscan"
 | order by Timestamp desc
 | project Timestamp, AccountName, FileName, InitiatingProcessCommandLine
-
 ```
+<img width="929" height="214" alt="image" src="https://github.com/user-attachments/assets/d66dc6d8-9669-458f-85e8-eb49365e1afc" />
 
 **Finding:** The script was launched under the user account **paige**, who was unaware of the activity. This behavior was not authorized by admins.
 
@@ -111,7 +111,6 @@ T1059 -- Command and Scripting Interpreter (PowerShell)
 T1105 -- Ingress Tool Transfer (portscan.ps1 script)
 T1204 -- User Execution
 T1569 -- System Services
-
 ```
 
 **5\. Response**
@@ -134,8 +133,6 @@ T1569 -- System Services
 -   Evidence of internal port scanning
 -   Identification of the script and user context
 -   Isolation and remediation steps taken
-
-Screenshots or log snippets can be added here as needed.
 
 **7\. Improvement**
 -------------------
